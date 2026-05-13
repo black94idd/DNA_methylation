@@ -48,6 +48,6 @@ run_normalized_dmp_filter <- function(base_dir) {
 # 模擬 Python 的 if __name__ == "__main__":
 if (!interactive() && sys.nframe() == 0) {
   # R 語言沒有直接對應 __file__ 的寫法，這裡以當前工作目錄(getwd)代替 base_dir
-  base_dir <- getwd() 
+  base_dir <- file.path(getwd(), "..")
   result <- run_normalized_dmp_filter(base_dir)
 }

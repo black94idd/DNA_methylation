@@ -6,14 +6,14 @@ run_normalized_dmp_filter <- function(base_dir) {
   dmp_path <- file.path(base_dir, "csv", "DMP_result_TC.csv")
   sample_sheet_path <- file.path(base_dir, "processing_data", "Sample_sheet.csv")
   
-  # 1. 讀取資料
+  # 讀取資料
   # row.names = 1 相當於 pandas 的 index_col=0
   Normalization <- read.csv(normalization_path, row.names = 1, stringsAsFactors = FALSE)
   DMP <- read.csv(dmp_path, row.names = 1, stringsAsFactors = FALSE)
   Sample_Sheet <- read.csv(sample_sheet_path, stringsAsFactors = FALSE)
   cat("資料讀取完成\n")
   
-  # 2. 篩選資料 (取交集)
+  # 篩選資料 (取交集)
   common_CpG <- intersect(rownames(Normalization), rownames(DMP))
   cat(sprintf("共有 %d 筆相同的 ID 資料。\n", length(common_CpG)))
   
@@ -21,7 +21,7 @@ run_normalized_dmp_filter <- function(base_dir) {
   filtered_Normalization <- Normalization[common_CpG, , drop = FALSE]
   cat(sprintf("篩選完成！共保留了 %d 筆相同的 ID 資料。\n", nrow(filtered_Normalization)))
   
-  # 3. 分組 (CKD 與 Normal)
+  # 分組 (CKD 與 Normal)
   Sample_Sheet$Sample_Name <- as.character(Sample_Sheet$Sample_Name)
   
   ckd_samples <- Sample_Sheet$Sample_Name[Sample_Sheet$Sample_Group == 'C']
@@ -36,7 +36,6 @@ run_normalized_dmp_filter <- function(base_dir) {
   EG <- filtered_Normalization[, ckd_cols, drop = FALSE]
   CG <- filtered_Normalization[, normal_cols, drop = FALSE]
   
-  # 4. 儲存結果
   write.csv(EG, file.path(base_dir, "csv", "EG_filtered.csv"), row.names = TRUE)
   write.csv(CG, file.path(base_dir, "csv", "CG_filtered.csv"), row.names = TRUE)
   cat("結果已儲存\n")
@@ -48,6 +47,6 @@ run_normalized_dmp_filter <- function(base_dir) {
 # 模擬 Python 的 if __name__ == "__main__":
 if (!interactive() && sys.nframe() == 0) {
   # R 語言沒有直接對應 __file__ 的寫法，這裡以當前工作目錄(getwd)代替 base_dir
-  base_dir <- getwd() 
+  base_dir <- file.path(getwd(), "..")
   result <- run_normalized_dmp_filter(base_dir)
 }

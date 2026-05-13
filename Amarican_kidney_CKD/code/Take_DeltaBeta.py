@@ -72,7 +72,7 @@ class take_delta_beta:
         return self.delta_beta_mean_values
 
 if __name__ == "__main__":
-    base_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.dirname(os.path.abspath(__file__)) + '/..'
     outliers_remover = take_delta_beta(base_dir)
     delta_beta_mean_values = outliers_remover.run()
     print(delta_beta_mean_values)

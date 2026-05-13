@@ -68,7 +68,7 @@ class PCA_analysis:
         plt.ylabel(f'Principal Component 2 ({self.pca.explained_variance_ratio_[1]*100:.2f}%)')
         plt.grid(True)
         
-        output_path = os.path.join(self.base_dir, "PCA_of_Significant_CpGs_AM.pdf")
+        output_path = os.path.join(self.base_dir, "PCA_of_Significant_CpGs_JP.pdf")
         plt.savefig(output_path, format='pdf', bbox_inches='tight')
         print(f"圖表已儲存至: {output_path}")
         plt.show()
@@ -76,7 +76,7 @@ class PCA_analysis:
         
 
 if __name__ == "__main__":
-    base_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.dirname(os.path.abspath(__file__)) + '/..'
     pca_analysis = PCA_analysis(base_dir)
     pca_analysis.run()
     # print(pca_analysis.significant_CpGs)

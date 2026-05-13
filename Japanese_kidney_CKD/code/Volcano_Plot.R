@@ -8,8 +8,8 @@ library(dplyr)
 library(ggplot2)
 
 # 讀取資料
-dmp_data <- read_csv("csv/DMP_result_TC.csv")
-delta_data <- read_csv("csv/delta_beta_mean_values.csv")
+dmp_data <- read_csv("../csv/DMP_result_TC.csv")
+delta_data <- read_csv("../csv/delta_beta_mean_values.csv")
 
 # 將 dmp_data 的第一欄改名為 CpG_ID
 colnames(dmp_data)[1] <- "CpG_ID"

@@ -5,7 +5,7 @@ library("ChAMP")
 
 library(stringr)
 
-path <- getwd()
+path <- file.path(getwd(), "..")
 
 my_pd <- read.csv(str_c(path, "/processing_data/Sample_sheet.csv"))
 

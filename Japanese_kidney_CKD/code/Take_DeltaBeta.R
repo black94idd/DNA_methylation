@@ -66,6 +66,6 @@ run_take_delta_beta <- function(base_dir) {
 }
 
 # 模擬 Python 的 if __name__ == "__main__": (已移除 if 限制，讓 RStudio 可以直接跑)
-base_dir <- getwd()
+base_dir <- file.path(getwd(), "..")
 delta_beta_results <- run_take_delta_beta(base_dir)
 print(head(delta_beta_results)) # 印出前幾筆檢查
