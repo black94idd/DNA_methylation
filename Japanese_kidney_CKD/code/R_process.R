@@ -46,6 +46,25 @@ myNorm <- champ.norm(beta = myLoad$beta, plotBMIQ = FALSE, cores = 10 , arraytyp
 
 write.csv(myNorm, file = str_c(path, "/csv/", "all_beta_normalized.csv"), quote = F, row.names = T)
 
-myDMP <- champ.DMP(beta = myNorm, pheno = myLoad$pd$Sample_Group, arraytype = "EPIC")
+# 我們用變異數過濾(Variance Filtering)，刪除明顯不顯著的CpG，藉此降低懲罰係數
+# =====================================================================
+
+# 1. 計算 myNorm 中每個探針在「所有樣本」中的變異數
+probe_variances <- apply(myNorm, 1, var, na.rm = TRUE)
+
+# 2. 設定門檻：砍掉變異數最低的 50% 探針 (可依後續特徵數量需求改為 0.3 或 0.7)
+variance_threshold <- quantile(probe_variances, 0.5, na.rm = TRUE)
+
+# 3. 只保留變異數大於門檻的探針，建立新的過濾矩陣 beta_filtered
+keep_probes <- names(probe_variances[probe_variances > variance_threshold])
+beta_filtered <- myNorm[keep_probes, ]
+
+# 印出過濾結果檢查
+print(paste("過濾前探針數:", nrow(myNorm)))
+print(paste("變異數過濾後探針數:", nrow(beta_filtered)))
+
+# =====================================================================
+
+myDMP <- champ.DMP(beta = beta_filtered, pheno = myLoad$pd$Sample_Group, arraytype = "EPIC")
 
 write.csv(myDMP[1], file = str_c(path, "/csv/DMP_result_TC.csv"), quote = F)

@@ -52,12 +52,12 @@ ggplot(merged_data, aes(x = Delta_Beta, y = -log10(N_to_C.adj.P.Val), color = Si
   theme(legend.title = element_blank())
 
 # 儲存成 PNG 檔
-ggsave(filename = "CKD_Volcano_Plot.png", 
+ggsave(filename = "../CKD_Volcano_Plot.png", 
        width = 8,       # 圖片寬度
        height = 6,      # 圖片高度
        dpi = 300)       # 解析度 300 dpi 是印刷和論文的標準要求
 
 # 儲存成 PDF 檔
-ggsave(filename = "CKD_Volcano_Plot.pdf", 
+ggsave(filename = "../CKD_Volcano_Plot.pdf", 
        width = 8, 
        height = 6)
